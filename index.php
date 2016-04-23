@@ -22,6 +22,8 @@ switch($mode){
 	case 'contact':
 		include("view/contact.html");
 		break;
+	case 'logout':
+		header('Location: ?');
 	default:
 		include("view/home.html");
 }
