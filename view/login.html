@@ -1,0 +1,14 @@
+<h1> Log in </h1>
+
+<form method="post" action="?mode=sisselogimine">
+	Username <br>
+	<input type="text" name="kasutaja" value="<?php if (isset($kasutaja)) echo($kasutaja)?>"><br>
+	Password<br>
+	<input type="password" name="parool"><br>
+	
+	<input type="submit" value="Log in">
+</form>
+
+<p>
+<a id="link" href="?mode=register"> Register </a>
+</p>

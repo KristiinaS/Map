@@ -1,0 +1,52 @@
+html, body {
+	background: linear-gradient(rgb(129,155,180),rgb(191, 203, 217));
+	background-attachment: fixed;
+	height: 100%;
+	color: white;
+	font-size: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	min-width: 700px;
+}
+#map {
+	height: 65%;
+	width: 75%;
+	border: 3px solid rgb(230, 255, 249); 
+	margin: auto;
+	margin-top: 5%;
+}
+#menu{
+	overflow:hidden;
+	list-style-type: none;
+	padding:0;
+	margin:0;
+	background-image: url("menubar.jpg");
+	border: 2px solid white;
+}
+a{
+	color: inherit;
+}
+li, li a{
+	text-decoration:none;
+	display: inline-block;
+	width: 120px;
+	line-height: 40px;
+	text-align: center;
+	float: left;
+	color: inherit;
+}
+#logging{
+	float: right;
+}
+.dropdown-content{
+	display: none;
+	position: absolute;
+	margin-top: 40px;
+	border: 2px solid white;
+	background: linear-gradient(rgb(129,155,180),rgb(191, 203, 217));
+}
+.dropdown:hover .dropdown-content{
+	display: block;
+}
+a:hover{
+	font-weight:bold;
+}
