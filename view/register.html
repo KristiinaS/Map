@@ -1,1 +1,13 @@
 <h1>Register</h1>
+
+<form method="post">
+	Username <br>
+	<input type="text" name="new_username" value="<?php if (isset($username)) echo($username)?>"><br>
+	Password<br>
+	<input type="password" name="new_password"><br>
+	Confirm password<br>
+	<input type="password" name="confirm_password"><br>
+	<input type="submit" value="Register">
+</form>
+
+<div id="message"> <?php if (isset($error)) echo($error) ?> </div>

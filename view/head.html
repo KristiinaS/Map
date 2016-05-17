@@ -34,12 +34,12 @@
 			}			
 			?>
 		</ul>
-	
+		
+	<div id="message"> 
 	<?php 
-	echo '<div id="error">';
-	if (isset($_SESSION['teade'])){
-		echo $_SESSION['teade']; 
-		unset($_SESSION['teade']);
-	}
-	echo '</div>';
-	?>
+	if (isset($_SESSION['notification'])){
+		echo $_SESSION['notification']; 
+		unset($_SESSION['notification']);
+	} 
+	?> 
+	</div>

@@ -1,6 +1,7 @@
 <?php 
 include_once("functions.php");
 begin_session();
+connect_db();
 
 $mode = "";
 if (isset($_GET['mode'])) {
@@ -19,7 +20,7 @@ switch($mode){
 		show_about();
 		break;
 	case 'register':
-		show_register();
+		register();
 		break;
 	case 'contact':
 		show_contact();
