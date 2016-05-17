@@ -12,19 +12,34 @@
 	<body>
 		
 		<ul id="menu">
+			
 			<li> <a href="?"> Home </a></li>
 			<li> <a href="?mode=map"> Map </a></li>
 			<li class="dropdown" id="logging"> 
-				<a href="?mode=login"> Log in </a>
-				<div class="dropdown-content">
-					<a href="?mode=register"> Register </a>
-				</div>
-			</li>
-			<li class="dropdown"> 
 				<a href="?mode=about"> About </a>
 				<div class="dropdown-content">
 					<a href="?mode=contact"> Contact </a>
 				</div>
 			</li>
-			<li id="logging"> <a href="?mode=logout"> Log out </a></li>
+			
+			<?php
+			if (isset($_SESSION['logged_in'])){
+				echo '<li> <a href="?mode=locations"> Locations </a></li>';
+				echo '<li id="logging"> <a href="?mode=logout"> Log out </a></li>';
+			} else {
+				echo '<li class="dropdown" id="logging"> ';
+				echo '<a href="?mode=login"> Log in </a>';
+				echo '<div class="dropdown-content">';
+					echo '<a href="?mode=register"> Register </a></div></li>';
+			}			
+			?>
 		</ul>
+	
+	<?php 
+	echo '<div id="error">';
+	if (isset($_SESSION['teade'])){
+		echo $_SESSION['teade']; 
+		unset($_SESSION['teade']);
+	}
+	echo '</div>';
+	?>

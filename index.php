@@ -1,4 +1,6 @@
 <?php 
+include_once("functions.php");
+begin_session();
 
 $mode = "";
 if (isset($_GET['mode'])) {
@@ -8,22 +10,25 @@ if (isset($_GET['mode'])) {
 include_once("view/head.html");
 switch($mode){
 	case 'map':
-		include("view/map.html");
+		show_map();
 		break;
 	case 'login':
-		include("view/login.html");
+		login();
 		break;
 	case 'about':
-		include("view/about.html");
+		show_about();
 		break;
 	case 'register':
-		include("view/register.html");
+		show_register();
 		break;
 	case 'contact':
-		include("view/contact.html");
+		show_contact();
+		break;
+	case 'locations':
+		show_locations();
 		break;
 	case 'logout':
-		header('Location: ?');
+		logout();
 	default:
 		include("view/home.html");
 }
