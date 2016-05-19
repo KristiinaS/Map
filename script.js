@@ -20,12 +20,23 @@ function initMap() {
 }
 
 function addMarker(location){
+	//alert("Funktsioon addMarker");
 	var marker = new google.maps.Marker({
 		position:location,
 		map:map
 	});
 	markers.push(marker);
-	//alert(location);
+	var answer = String(location).split(',');
+	var lat = answer[0].substring(1);
+	var lng = answer[1].substring(0,answer[1].length-1);
+	
+	//write coordinates to database
+	$.ajax({
+		type: "POST",
+		url: 'ajax.php',
+		data: {lat:lat, lng:lng},
+		success: function(data){console.log(data)}		
+	});
 }
 
 // Sets the map on all markers in the array.
@@ -50,3 +61,23 @@ function deleteMarkers(){
 	clearMarkers();
 	markers = [];
 }
+
+//Show all locations saved in database
+function showMyLocations(){
+
+
+	$.ajax({
+		type: "POST",
+		url: 'ajax.php',
+		data: {show_locations:1},
+		success: function(data){console.log(data)}		
+	});
+	
+	var locations = $("input#locations").val();
+
+	
+
+	//alert(locations);
+}
+
+

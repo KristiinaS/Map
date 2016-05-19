@@ -1,1 +1,11 @@
 <h1> My locations </h1>
+
+<?php 
+$locations = get_locations();
+
+echo '<table id="table"><tr><th>Name of place</th><th>Latitude</th><th>Longitude</th></tr>';
+foreach($locations as $place) {
+    echo '<tr><td>'.$place[0].'</td><td>'.$place[1].'</td><td>'.$place[2].'</td></tr>';
+}
+echo '</table>';
+?>

@@ -1,6 +1,11 @@
+<head> <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYHMaZC7u0yKBzOhcIrpAdSPMsx1RY_BM&callback=initMap" async defer></script> </head>
+
 <h1> Map </h1>
 
 <input onclick="clearMarkers();" type=button value="Hide Markers">
 <input onclick="showMarkers();" type=button value="Show All Markers">
 <input onclick="deleteMarkers();" type=button value="Delete Markers">
-<div id="map"> Map is here </div>
+<input onclick="showMyLocations();" type=button value="Show My Locations">
+<div id="map">  </div>
+
+<div id="message"> <?php if (isset($error)) echo($error) ?> </div>

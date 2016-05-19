@@ -43,6 +43,18 @@ li, li a{
 	font-size: 14px;
 	font-style: italic;
 }
+#username{
+	padding-top:10px;
+	font-size: 14px;
+	font-style: italic;
+	float:right;
+}
+#table{
+	border: 1px solid white;
+}
+#table td {
+	padding: 5px;
+}
 .dropdown-content{
 	display: none;
 	position: absolute;

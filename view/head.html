@@ -4,8 +4,9 @@
 		<meta name="viewport" content="initial-scale=1.0">
 		<meta charset="utf-8" />
 		<title>Mapping</title>
-		<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYHMaZC7u0yKBzOhcIrpAdSPMsx1RY_BM&callback=initMap" async defer></script>
-		<script src="script.js"></script>-->
+		
+		<script src="script.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="style.css">
 
 	</head>
@@ -24,7 +25,7 @@
 			
 			<?php
 			if (isset($_SESSION['logged_in'])){
-				echo '<li> <a href="?mode=locations"> Locations </a></li>';
+				echo '<li> <a href="?mode=locations"> My locations </a></li>';
 				echo '<li id="logging"> <a href="?mode=logout"> Log out </a></li>';
 			} else {
 				echo '<li class="dropdown" id="logging"> ';
@@ -34,7 +35,15 @@
 			}			
 			?>
 		</ul>
-		
+
+	<div id="username"> 
+	<?php 
+	if (isset($_COOKIE['username']) AND !empty($_COOKIE['username'])){
+		echo "Logged in as <b>".$_COOKIE['username']."</b>.";
+	}
+	?> 
+	</div>
+	
 	<div id="message"> 
 	<?php 
 	if (isset($_SESSION['notification'])){
@@ -43,3 +52,5 @@
 	} 
 	?> 
 	</div>
+	
+	

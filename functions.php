@@ -5,6 +5,7 @@ function begin_session(){
 
 function end_session(){
 	$_SESSION = array();
+	setcookie ("username","",time()-42000);
 	if (isset($_COOKIE[session_name()])) {
 		setcookie(session_name(), '', time()-42000, '/');
 	}
@@ -51,9 +52,10 @@ function login(){
 			if ($rows){
 				$_SESSION['logged_in'] = 1;
 				$_SESSION['notification'] = "You are now logged in!";
-				$_SESSION['username'] = $username;
+				setcookie("username",$username);
 				$value = mysqli_fetch_object($result);
 				$_SESSION['id'] = $value->id;
+				create_locations_db($username);
 				header('Location:?mode=map');
 			} else {				
 				$error = "Username/password is incorrect! <br> \n";
@@ -63,6 +65,51 @@ function login(){
 	} else {
 		include('view/login.html');
 	}
+}
+
+function create_locations_db($username) {
+	global $connection;
+	$tablename = $username.'_locations';
+	$query = "show tables like '$tablename'"; //check if table already exists
+	$result = mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+	$rows = mysqli_num_rows($result);
+	//$_SESSION['notification'] = "Rows: ".$rows;
+	if (!$rows) {
+		$query = "create table $tablename (name varchar(60) not null, lat float (10,6) not null, lng float (10,6) not null)";
+		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+	}
+}
+
+function add_location() {
+	global $connection;
+	if (isset($_COOKIE['username'])) {
+		$lat = $_POST['lat'];
+		$lng = $_POST['lng'];
+		$table = $_COOKIE['username']."_locations";
+		$query = "insert into $table (name,lat,lng) values ('test','$lat', $lng)";
+		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+		echo "Information added to database.";
+	}
+	
+}
+
+function get_locations() {
+	global $connection;
+	$table = $_COOKIE['username']."_locations";
+	$query = "select * from $table";
+	$result = mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+	$locations = [];
+	while ($line = mysqli_fetch_array($result)){ 
+		//print_r($line);
+		$name = $line['name'];
+		$lat = $line['lat'];
+		$lng = $line['lng'];
+		//$location = "(".$lat.",".$lng.")";
+		$location = [$name, $lat, $lng];
+		array_push($locations,$location);
+	}
+	return $locations;
+	
 }
 
 function show_about(){
