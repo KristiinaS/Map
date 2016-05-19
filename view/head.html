@@ -49,7 +49,10 @@
 	if (isset($_SESSION['notification'])){
 		echo $_SESSION['notification']; 
 		unset($_SESSION['notification']);
-	} 
+	} else if (isset($_COOKIE['notification'])) {
+		echo $_COOKIE['notification'];
+		setcookie('notification', '', time()-42000);
+	}
 	?> 
 	</div>
 	
