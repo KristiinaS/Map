@@ -15,4 +15,10 @@ if (isset($_POST['show_locations'])) {
 	<?php*/
 	
 } 
+
+if (isset($_POST['delete'])){
+	$lat = $_POST['delete_lat'];
+	$lng = $_POST['delete_lng'];
+	delete_location($lat,$lng);
+}
 ?>

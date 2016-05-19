@@ -62,7 +62,24 @@ function deleteMarkers(){
 	markers = [];
 }
 
+
+function deleteLocation(lat,lng){
+	var click = confirm("Are you sure you want to delete this location?");
+	if (click == true) {
+		$.post("ajax.php", {'delete':1, 'delete_lat':lat, 'delete_lng':lng}, function (resp){
+			window.onload = function() {
+				if(!window.location.hash) {
+					window.location = window.location + '#loaded';
+					window.location.reload();
+				}
+			}
+			document.getElementById("message").innerHTML = "Location has been removed! <br> \n";
+		});
+	}
+}
+
 //Show all locations saved in database
+// ei tööta
 function showMyLocations(){
 
 

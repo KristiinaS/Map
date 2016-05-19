@@ -52,7 +52,7 @@ li, li a{
 #table{
 	border: 1px solid white;
 }
-#table td {
+#table th, td {
 	padding: 5px;
 }
 .dropdown-content{

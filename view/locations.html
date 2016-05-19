@@ -3,9 +3,17 @@
 <?php 
 $locations = get_locations();
 
-echo '<table id="table"><tr><th>Name of place</th><th>Latitude</th><th>Longitude</th></tr>';
-foreach($locations as $place) {
-    echo '<tr><td>'.$place[0].'</td><td>'.$place[1].'</td><td>'.$place[2].'</td></tr>';
+echo '<table id="table"><tr>';
+echo '<th>Name of place</th>';
+echo '<th>Latitude</th>';
+echo '<th>Longitude</th></tr>';
+
+
+foreach($locations as $id=>$data) {
+    echo '<tr><td>'.$data[0].'</td>';
+	echo '<td>'.$data[1].'</td>';
+	echo '<td>'.$data[2].'</td>';
+	echo '<td><button type="button" onclick="deleteLocation('.$data[1].','.$data[2].')" name="delete_button">Delete</button></td></tr>';
 }
 echo '</table>';
 ?>

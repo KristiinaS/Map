@@ -81,16 +81,27 @@ function create_locations_db($username) {
 }
 
 function add_location() {
-	global $connection;
+	global $connection; // ei tööta
 	if (isset($_COOKIE['username'])) {
 		$lat = $_POST['lat'];
 		$lng = $_POST['lng'];
 		$table = $_COOKIE['username']."_locations";
+		$connection = mysqli_connect('localhost', 'xxx', 'xxx', 'map');
 		$query = "insert into $table (name,lat,lng) values ('test','$lat', $lng)";
 		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
 		echo "Information added to database.";
 	}
 	
+}
+
+function delete_location($lat,$lng){
+	global $connection; // ei tööta
+	if (isset($_COOKIE['username'])) {
+		$table = $_COOKIE['username']."_locations";
+		$connection = mysqli_connect('localhost', 'xxx', 'xxx', 'map');
+		$query = "delete from $table where lat=$lat and lng=$lng";
+		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+	}
 }
 
 function get_locations() {
@@ -109,7 +120,6 @@ function get_locations() {
 		array_push($locations,$location);
 	}
 	return $locations;
-	
 }
 
 function show_about(){
