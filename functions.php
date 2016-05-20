@@ -75,7 +75,7 @@ function create_locations_db($username) {
 	$rows = mysqli_num_rows($result);
 	//$_SESSION['notification'] = "Rows: ".$rows;
 	if (!$rows) {
-		$query = "create table $tablename (name varchar(60) not null, lat float (10,6) not null, lng float (10,6) not null)";
+		$query = "create table $tablename (country varchar(60) not null, city varchar(60) not null, lat float (10,6) not null, lng float (10,6) not null)";
 		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
 	}
 }
@@ -85,8 +85,10 @@ function add_location() {
 	if (isset($_COOKIE['username'])) {
 		$lat = $_POST['lat'];
 		$lng = $_POST['lng'];
+		$country = $_POST['country'];
+		$city = $_POST['city'];
 		$table = $_COOKIE['username']."_locations";
-		$query = "insert into $table (name,lat,lng) values ('test','$lat', $lng)";
+		$query = "insert into $table (country,city,lat,lng) values ('$country','$city','$lat', $lng)";
 		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
 		echo "Information added to database.";
 	}
@@ -102,6 +104,15 @@ function delete_location($lat,$lng){
 	}
 }
 
+function delete_all_locations(){
+	global $connection;
+	if (isset($_COOKIE['username'])) {
+		$table = $_COOKIE['username']."_locations";
+		$query = "truncate table $table";
+		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+	}
+}
+
 function get_locations() {
 	global $connection;
 	$table = $_COOKIE['username']."_locations";
@@ -110,11 +121,12 @@ function get_locations() {
 	$locations = [];
 	while ($line = mysqli_fetch_array($result)){ 
 		//print_r($line);
-		$name = $line['name'];
+		$country = $line['country'];
+		$city = $line['city'];		
 		$lat = $line['lat'];
 		$lng = $line['lng'];
 		//$location = "(".$lat.",".$lng.")";
-		$location = [$name, $lat, $lng];
+		$location = [$country, $city, $lat, $lng];
 		array_push($locations,$location);
 	}
 	return $locations;
@@ -170,6 +182,20 @@ function logout(){
 	end_session();
 	$_SESSION['notification'] = "You have been logged out!";
 	header('Location:?');
+}
+
+function DECtoDMS($dec){
+	$vars = explode(".",$dec);
+    $deg = $vars[0];
+    $tempma = "0.".$vars[1];
+
+    $tempma = $tempma * 3600;
+    $min = floor($tempma / 60);
+    $sec = $tempma - ($min*60);
+	
+	$dms = $deg.'° '.$min.'\' '.round($sec,2).'"';
+
+    return $dms;
 }
 
 ?>

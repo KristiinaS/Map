@@ -4,16 +4,24 @@
 $locations = get_locations();
 
 echo '<table id="table"><tr>';
-echo '<th>Name of place</th>';
+echo '<th>Country</th>';
+echo '<th>City/County</th>';
 echo '<th>Latitude</th>';
 echo '<th>Longitude</th></tr>';
 
 
 foreach($locations as $id=>$data) {
     echo '<tr><td>'.$data[0].'</td>';
-	echo '<td>'.$data[1].'</td>';
-	echo '<td>'.$data[2].'</td>';
-	echo '<td><button type="button" onclick="deleteLocation('.$data[1].','.$data[2].')" name="delete_button">Delete</button></td></tr>';
+	echo '<td>'.($data[1]).'</td>';
+	echo '<td>'.DECtoDMS($data[2]).'</td>';
+	echo '<td>'.DECtoDMS($data[3]).'</td>';
+	echo '<td><button type="button" onclick="deleteLocation('.$data[2].','.$data[3].')" name="delete_button">Delete</button></td></tr>';
 }
 echo '</table>';
 ?>
+
+<p>Total:  <?php echo sizeof($locations); 
+	if (sizeof($locations) != 0) {
+		echo '   <button type="button" onclick="deleteAllLocations()" name="delete_button">Delete all</button>';
+	}
+?>  </p>
