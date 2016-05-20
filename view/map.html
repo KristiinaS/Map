@@ -2,12 +2,15 @@
 
 <h1> Map </h1>
 
-<input onclick="clearMarkers();" type=button value="Hide Markers">
-<input onclick="showMarkers();" type=button value="Show All Markers">
-<input onclick="deleteMarkers();" type=button value="Delete Markers">
 <?php 
-if (isset($_COOKIE['username'])){
+if (isset($_SESSION['logged_in'])){
 	echo '<input onclick="showMyLocations();" type=button value="Show My Locations">';
+	echo '<input onclick="clearMarkers();" type=button value="Hide My Locations">';
+	echo '<input onclick="deleteAllLocations();" type=button value="Delete My Locations">';
+} else {
+	echo '<input onclick="clearMarkers();" type=button value="Hide Markers">';
+	echo '<input onclick="showMarkers();" type=button value="Show All Markers">';
+	echo '<input onclick="deleteMarkers();" type=button value="Delete Markers">';
 }
 ?>
 <div id="map">  </div>

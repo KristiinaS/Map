@@ -122,7 +122,7 @@ function deleteLocation(lat,lng){
 }
 
 function deleteAllLocations(){
-	var click = confirm("Are you sure you want to delete this location?");
+	var click = confirm("Are you sure you want to delete all your locations?");
 	if (click == true) {
 		$.post("ajax.php", {'delete_all':1}, function(){
 			location.reload();	
@@ -131,22 +131,20 @@ function deleteAllLocations(){
 }
 
 //Show all locations saved in database
-function showMyLocations(){
-	
-	var db_markers = [];
+function showMyLocations(){	
 	var marker;
-	
+
 	$.post("ajax.php", {show_locations:1}, function(resp){
 		var locations = JSON.parse(resp);
 		i = 0;
 		while (i < locations.length) {
-			var coordinates = {lat: locations[i][1], lng: locations[i][2]};
-			console.log(coordinates);
+			var coordinates = {lat: parseFloat(locations[i][2]), lng: parseFloat(locations[i][3])};
+			//console.log(coordinates);
 			marker = new google.maps.Marker({
-				map: map,
-				position: coordinates.latLng
+				position: coordinates,
+				map: map
 			})
-			db_markers.push(marker);
+			markers.push(marker);
 			marker.setMap(map);
 			i++;
 		}
