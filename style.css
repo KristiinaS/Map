@@ -53,7 +53,7 @@ li, li a{
 	border: 1px solid white;
 }
 #table th, td {
-	padding: 8px;
+	padding-right: 6px;
 	text-align: left;
 }
 #footer {

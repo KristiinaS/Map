@@ -56,7 +56,7 @@ function login(){
 				$value = mysqli_fetch_object($result);
 				$_SESSION['id'] = $value->id;
 				create_locations_db($username);
-				header('Location:?mode=map');
+				header('Location:?mode=locations');
 			} else {				
 				$error = "Username/password is incorrect! <br> \n";
 				include("view/login.html");
@@ -75,7 +75,7 @@ function create_locations_db($username) {
 	$rows = mysqli_num_rows($result);
 	//$_SESSION['notification'] = "Rows: ".$rows;
 	if (!$rows) {
-		$query = "create table $tablename (country varchar(60) not null, city varchar(60) not null, lat float (10,6) not null, lng float (10,6) not null)";
+		$query = "create table $tablename (country varchar(60) not null, city varchar(60) not null, lat float (10,6) not null, lng float (10,6) not null, comment varchar(300), id int auto_increment primary key)";
 		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
 	}
 }
@@ -95,11 +95,20 @@ function add_location() {
 	
 }
 
-function delete_location($lat,$lng){
+function save_comment($id, $comment){
+	global $connection;
+	if (isset($_COOKIE['username'])){
+		$table = $_COOKIE['username']."_locations";
+		$query = "update $table set comment='$comment' where id=$id";
+		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+	}
+}
+
+function delete_location($id){
 	global $connection;
 	if (isset($_COOKIE['username'])) {
 		$table = $_COOKIE['username']."_locations";
-		$query = "delete from $table where lat=$lat and lng=$lng";
+		$query = "delete from $table where id=$id";
 		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
 	}
 }
@@ -120,13 +129,13 @@ function get_locations() {
 	$result = mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
 	$locations = [];
 	while ($line = mysqli_fetch_array($result)){ 
-		//print_r($line);
 		$country = $line['country'];
 		$city = $line['city'];		
 		$lat = $line['lat'];
 		$lng = $line['lng'];
-		//$location = "(".$lat.",".$lng.")";
-		$location = [$country, $city, $lat, $lng];
+		$comment = $line['comment'];
+		$id = $line['id'];
+		$location = [$country, $city, $lat, $lng, $comment, $id];
 		array_push($locations,$location);
 	}
 	return $locations;

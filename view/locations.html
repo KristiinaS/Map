@@ -7,7 +7,8 @@ echo '<table id="table"><tr>';
 echo '<th>Country</th>';
 echo '<th>City/County</th>';
 echo '<th>Latitude</th>';
-echo '<th>Longitude</th></tr>';
+echo '<th>Longitude</th>';
+echo '<th>Comment</th></tr>';
 
 
 foreach($locations as $id=>$data) {
@@ -15,7 +16,9 @@ foreach($locations as $id=>$data) {
 	echo '<td>'.($data[1]).'</td>';
 	echo '<td>'.DECtoDMS($data[2]).'</td>';
 	echo '<td>'.DECtoDMS($data[3]).'</td>';
-	echo '<td><button type="button" onclick="deleteLocation('.$data[2].','.$data[3].')" name="delete_button">Delete</button></td></tr>';
+	echo '<td><textarea id="comment'.$data[5].'" rows="3" cols="30">'.$data[4].'</textarea></td>';
+	echo '<td><button type="button" onclick="saveComment('.$data[5].')" name="save_button">Save <br> comment </button></form></td>';
+	echo '<td><button type="button" onclick="deleteLocation('.$data[5].')" name="delete_button">Delete <br> location</button></td></tr>';
 }
 echo '</table>';
 ?>

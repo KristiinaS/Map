@@ -112,13 +112,22 @@ function deleteMarkers(){
 }
 
 // Deletes locations from the list and database
-function deleteLocation(lat,lng){
+function deleteLocation(id){
 	var click = confirm("Are you sure you want to delete this location?");
 	if (click == true) {
-		$.post("ajax.php", {'delete':1, 'delete_lat':lat, 'delete_lng':lng}, function(){
+		$.post("ajax.php", {'delete':1, 'id':id}, function(){
 			location.reload();	
 		});
 	}
+}
+
+function saveComment(id){
+	var comment = document.getElementById("comment"+id).value;
+	//console.log("JS comment: ", comment);
+	//console.log("id: ", id);
+	$.post("ajax.php", {'save_comment':1, 'id':id, 'comment':comment}, function(resp){
+		console.log(resp);
+	});
 }
 
 function deleteAllLocations(){

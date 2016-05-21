@@ -12,15 +12,20 @@ if (isset($_POST['show_locations'])) {
 	
 } 
 
+if (isset($_POST['save_comment'])) {
+	$id = $_POST['id'];
+	$comment = $_POST['comment'];
+	save_comment($id, $comment);
+}
+
 if (isset($_POST['delete_all'])){
 	delete_all_locations();
 	setcookie('notification', 'All locations have been deleted!');
 }
 
 if (isset($_POST['delete'])){
-	$lat = $_POST['delete_lat'];
-	$lng = $_POST['delete_lng'];
-	delete_location($lat,$lng);
+	$id = $_POST['id'];
+	delete_location($id);
 	setcookie('notification', 'Location has been removed! <br>');
 }
 ?>
