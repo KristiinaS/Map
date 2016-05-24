@@ -1,24 +1,26 @@
 <h1> My locations </h1>
 
+<p> You can see your saved locations in the table below. </p>
+
 <?php 
 $locations = get_locations();
 
-echo '<table id="table"><tr>';
-echo '<th>Country</th>';
-echo '<th>City/County</th>';
-echo '<th>Latitude</th>';
-echo '<th>Longitude</th>';
-echo '<th>Comment</th></tr>';
+echo '<table id="table"><tr>'."\n";
+echo '<th>Country</th>'."\n";
+echo '<th>City/County</th>'."\n";
+echo '<th>Latitude</th>'."\n";
+echo '<th>Longitude</th>'."\n";
+echo '<th>Comment</th></tr>'."\n";
 
 
 foreach($locations as $id=>$data) {
-    echo '<tr><td>'.$data[0].'</td>';
-	echo '<td>'.($data[1]).'</td>';
-	echo '<td>'.DECtoDMS($data[2]).'</td>';
-	echo '<td>'.DECtoDMS($data[3]).'</td>';
-	echo '<td><textarea id="comment'.$data[5].'" rows="3" cols="30">'.$data[4].'</textarea></td>';
-	echo '<td><button type="button" onclick="saveComment('.$data[5].')" name="save_button">Save <br> comment </button></form></td>';
-	echo '<td><button type="button" onclick="deleteLocation('.$data[5].')" name="delete_button">Delete <br> location</button></td></tr>';
+    echo '<tr><td>'.$data[0].'</td>'."\n";
+	echo '<td>'.($data[1]).'</td>'."\n";
+	echo '<td>'.DECtoDMS($data[2]).'</td>'."\n";
+	echo '<td>'.DECtoDMS($data[3]).'</td>'."\n";
+	echo '<td><textarea id="comment'.$data[5].'" rows="3" cols="30">'.$data[4].'</textarea></td>'."\n";
+	echo '<td><button type="button" onclick="saveComment('.$data[5].')" name="save_button">Save <br> comment </button></form></td>'."\n";
+	echo '<td><button type="button" onclick="deleteLocation('.$data[5].')" name="delete_button">Delete <br> location</button></td></tr>'."\n";
 }
 echo '</table>';
 ?>

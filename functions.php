@@ -56,7 +56,7 @@ function login(){
 				$value = mysqli_fetch_object($result);
 				$_SESSION['id'] = $value->id;
 				create_locations_db($username);
-				header('Location:?mode=locations');
+				header('Location:?mode=map');
 			} else {				
 				$error = "Username/password is incorrect! <br> \n";
 				include("view/login.html");
@@ -96,6 +96,7 @@ function add_location() {
 }
 
 function save_comment($id, $comment){
+	$comment = htmlspecialchars($comment);
 	global $connection;
 	if (isset($_COOKIE['username'])){
 		$table = $_COOKIE['username']."_locations";

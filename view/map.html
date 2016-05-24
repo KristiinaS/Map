@@ -1,6 +1,14 @@
 <head> <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYHMaZC7u0yKBzOhcIrpAdSPMsx1RY_BM&callback=initMap" async defer></script> </head>
 
+<script>
+window.onload = function(){
+	showMyLocations();
+}
+</script>
+
 <h1> Map </h1>
+
+<p> To add new locations to your list, please click on the map below. To see your saved locations on the map, please click on the button named "Show My Locations", to hide them, click on "Hide My Locations". By clicking "Delete My Locations" all the saved places will be erased.</p>
 
 <?php 
 if (isset($_SESSION['logged_in'])){
