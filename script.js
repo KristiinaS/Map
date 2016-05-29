@@ -12,7 +12,6 @@ function initMap() {
 }
 
 function addMarker(location){
-	//alert("Funktsioon addMarker");
 	var marker = new google.maps.Marker({
 		position:location,
 		map:map
@@ -64,13 +63,10 @@ function getCity(results){
 			var longname = results[1].address_components[i].long_name;
 			var type = results[1].address_components[i].types;
 			if (type.indexOf("locality") != -1) {
-				//console.log("city: ", longname);
 				return longname;
 			} else if (type.indexOf("administrative_area_level_1") != -1){
-				//console.log("county: ", longname);
 				return longname;
 			} else if (i == results[1].address_components.length-1) {
-				//console.log("Place unknown");
 				return "Unknown";
 			}
 		}
@@ -82,7 +78,6 @@ function getCountry(results){
 		var longname = results[0].address_components[i].long_name;
 		var type = results[0].address_components[i].types;
 		if (type.indexOf("country") != -1){
-			//console.log("country: ", longname);
 			return longname;
 		}
 	}
@@ -148,7 +143,6 @@ function showMyLocations(){
 		i = 0;
 		while (i < locations.length) {
 			var coordinates = {lat: parseFloat(locations[i][2]), lng: parseFloat(locations[i][3])};
-			//console.log(coordinates);
 			marker = new google.maps.Marker({
 				position: coordinates,
 				map: map

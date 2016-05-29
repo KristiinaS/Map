@@ -1,4 +1,4 @@
-<head> <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYHMaZC7u0yKBzOhcIrpAdSPMsx1RY_BM&callback=initMap" async defer></script> </head>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYHMaZC7u0yKBzOhcIrpAdSPMsx1RY_BM&callback=initMap" async defer></script>
 
 <script>
 window.onload = function(){
@@ -23,4 +23,4 @@ if (isset($_SESSION['logged_in'])){
 ?>
 <div id="map">  </div>
 
-<div id="message"> <?php if (isset($error)) echo($error) ?> </div>
+<div class="message"> <?php if (isset($error)) echo($error) ?> </div>

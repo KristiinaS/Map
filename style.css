@@ -39,10 +39,10 @@ p{
 	float: left;
 	color: inherit;
 }
-#logging{
+#logging, #info{
 	float: right;
 }
-#message{
+.message{
 	padding-top:10px;
 	font-size: 14px;
 	font-style: italic;

@@ -16,7 +16,7 @@
 			
 			<li> <a href="?"> Home </a></li>
 			<li> <a href="?mode=map"> Map </a></li>
-			<li class="dropdown" id="logging"> 
+			<li class="dropdown" id="info"> 
 				<a href="?mode=about"> Info </a>
 				<div class="dropdown-content">
 					<a href="?mode=contact"> Contact </a>
@@ -44,7 +44,7 @@
 	?> 
 	</div>
 	
-	<div id="message"> 
+	<div class="message"> 
 	<?php 
 	if (isset($_SESSION['notification'])){
 		echo $_SESSION['notification']; 
