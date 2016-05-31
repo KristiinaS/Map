@@ -1,9 +1,12 @@
 <?php 
 include_once("functions.php");
 connect_db();
+session_start();
+$username = $_SESSION['username'];
 
 if (isset($_POST['lat']) AND isset($_POST['lng']) AND isset($_POST['country']) AND isset($_POST['city'])) {
 	add_location();
+	echo $username;
 } 
 
 if (isset($_POST['show_locations'])) {

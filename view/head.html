@@ -38,8 +38,8 @@
 
 	<div id="username"> 
 	<?php 
-	if (isset($_COOKIE['username']) AND !empty($_COOKIE['username'])){
-		echo "Logged in as <b>".$_COOKIE['username']."</b>.";
+	if (isset($_SESSION['username']) AND !empty($_SESSION['username'])){
+		echo "Logged in as <b>".$_SESSION['username']."</b>.";
 	}
 	?> 
 	</div>

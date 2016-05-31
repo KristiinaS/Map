@@ -52,7 +52,7 @@ function login(){
 			if ($rows){
 				$_SESSION['logged_in'] = 1;
 				$_SESSION['notification'] = "You are now logged in!";
-				setcookie("username",$username);
+				$_SESSION['username'] = $username;
 				$value = mysqli_fetch_object($result);
 				$_SESSION['id'] = $value->id;
 				create_locations_db($username);
@@ -82,12 +82,13 @@ function create_locations_db($username) {
 
 function add_location() {
 	global $connection; 
-	if (isset($_COOKIE['username'])) {
-		$lat = $_POST['lat'];
-		$lng = $_POST['lng'];
-		$country = $_POST['country'];
-		$city = $_POST['city'];
-		$table = $_COOKIE['username']."_locations";
+	$username = $_SESSION['username'];
+	if (isset($username)) {
+		$lat = htmlspecialchars($_POST['lat']);
+		$lng = htmlspecialchars($_POST['lng']);
+		$country = htmlspecialchars($_POST['country']);
+		$city = htmlspecialchars($_POST['city']);
+		$table = $username."_locations";
 		$query = "insert into $table (country,city,lat,lng) values ('$country','$city','$lat', $lng)";
 		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
 		echo "Information added to database.";
@@ -98,8 +99,9 @@ function add_location() {
 function save_comment($id, $comment){
 	$comment = htmlspecialchars($comment);
 	global $connection;
-	if (isset($_COOKIE['username'])){
-		$table = $_COOKIE['username']."_locations";
+	$username = $_SESSION['username'];
+	if (isset($username)){
+		$table = $username."_locations";
 		$query = "update $table set comment='$comment' where id=$id";
 		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
 	}
@@ -107,8 +109,9 @@ function save_comment($id, $comment){
 
 function delete_location($id){
 	global $connection;
-	if (isset($_COOKIE['username'])) {
-		$table = $_COOKIE['username']."_locations";
+	$username = $_SESSION['username'];
+	if (isset($username)) {
+		$table = $username."_locations";
 		$query = "delete from $table where id=$id";
 		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
 	}
@@ -116,8 +119,9 @@ function delete_location($id){
 
 function delete_all_locations(){
 	global $connection;
-	if (isset($_COOKIE['username'])) {
-		$table = $_COOKIE['username']."_locations";
+	$username = $_SESSION['username'];
+	if (isset($username)) {
+		$table = $username."_locations";
 		$query = "truncate table $table";
 		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
 	}
@@ -125,7 +129,7 @@ function delete_all_locations(){
 
 function get_locations() {
 	global $connection;
-	$table = $_COOKIE['username']."_locations";
+	$table = $_SESSION['username']."_locations";
 	$query = "select * from $table";
 	$result = mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
 	$locations = [];
