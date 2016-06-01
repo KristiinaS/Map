@@ -2,7 +2,7 @@
 
 <form method="post">
 	Username <br>
-	<input type="text" name="new_username" value="<?php if (isset($username)) echo($username)?>" title="Username can only contain lowercase, uppercase and numbers." pattern="[A-Za-z0-9]+" ><br>
+	<input type="text" name="new_username" value="<?php if (isset($username)) echo($username)?>" title="Username can only contain lowercase, uppercase and numbers." pattern="[A-Za-z0-9]+" maxlength="40"><br>
 	Password<br>
 	<input type="password" name="new_password"><br>
 	Confirm password<br>

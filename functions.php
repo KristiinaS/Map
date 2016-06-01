@@ -169,8 +169,11 @@ function register(){
 		if (empty($username) OR empty($password) OR empty($password2)){
 			$error = "Please fill in all the fields!";
 			include('view/register.html');
+		} else if (strlen($username) > 40) {
+			$error = "Username cannot be more than 40 characters!";
+			include('view/register.html');
 		} else if (!ctype_alnum($username)) {
-			$error = "Username can only contain letters and numbers.";
+			$error = "Username can only contain letters and numbers!";
 			include('view/register.html');
 		} else if (strlen($password) < 6) { //check if password is long enough
 			$error = "Password must be at least 6 characters long!";
