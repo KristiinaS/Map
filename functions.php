@@ -172,8 +172,8 @@ function register(){
 		} else if (!ctype_alnum($username)) {
 			$error = "Username can only contain letters and numbers.";
 			include('view/register.html');
-		} else if (strlen($password) < 9) { //check if password is long enough
-			$error = "Password must be at least 9 characters long!";
+		} else if (strlen($password) < 6) { //check if password is long enough
+			$error = "Password must be at least 6 characters long!";
 			include('view/register.html');
 		} else if (strcmp($password,$password2) !== 0) { //check if the passwords match
 			$error = "Inserted passwords are different!";
