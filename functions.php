@@ -19,7 +19,7 @@ function connect_db(){
 	$pass="xxx";
 	$db="map";
 	$connection = mysqli_connect($host, $user, $pass, $db) or die("Couldn't connect to database.");
-	mysqli_query($connection, "SET CHARACTER SET UTF8") or die("Couldn't get database in UTF8 - ".mysqli_error($connection));
+	mysqli_query($connection, "SET CHARACTER SET UTF8") or die(/*"Couldn't get database in UTF8 - ".mysqli_error($connection*/ "Error 100: Oops! Something went wrong!")/*)*/;
 }
 
 function show_map(){
@@ -47,7 +47,7 @@ function login(){
 		} else {
 			$password = sha1($password);
 			$query = "select * from users where username='$username' and passwrd='$password'";
-			$result = mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+			$result = mysqli_query($connection, $query) or die("Error 101: Oops! Something went wrong!");
 			$rows = mysqli_num_rows($result); //Check if the user exists in database
 			if ($rows){
 				$_SESSION['logged_in'] = 1;
@@ -71,18 +71,18 @@ function create_locations_db($username) {
 	global $connection;
 	$tablename = $username.'_locations';
 	$query = "show tables like '$tablename'"; //check if table already exists
-	$result = mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+	$result = mysqli_query($connection, $query) or die("Error 102a: Oops! Something went wrong!");
 	$rows = mysqli_num_rows($result);
 	//$_SESSION['notification'] = "Rows: ".$rows;
 	if (!$rows) {
 		$query = "create table $tablename (country varchar(60) not null, city varchar(60) not null, lat float (10,6) not null, lng float (10,6) not null, comment varchar(300), id int auto_increment primary key)";
-		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+		mysqli_query($connection, $query) or die("Error 102b: Oops! Something went wrong!");
 	}
 }
 
 function add_location() {
 	global $connection; 
-	$username = $_SESSION['username'];
+	$username = mysqli_real_escape_string($connection, htmlspecialchars($_SESSION['username']));
 	if (isset($username)) {
 		$lat = htmlspecialchars($_POST['lat']);
 		$lng = htmlspecialchars($_POST['lng']);
@@ -90,48 +90,49 @@ function add_location() {
 		$city = htmlspecialchars($_POST['city']);
 		$table = $username."_locations";
 		$query = "insert into $table (country,city,lat,lng) values ('$country','$city','$lat', $lng)";
-		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+		mysqli_query($connection, $query) or die("Error 103: Oops! Something went wrong!");
 		echo "Information added to database.";
 	}
 	
 }
 
 function save_comment($id, $comment){
-	$comment = htmlspecialchars($comment);
 	global $connection;
-	$username = $_SESSION['username'];
+	$comment = mysqli_real_escape_string($connection, htmlspecialchars($comment));
+	$username = mysqli_real_escape_string($connection, htmlspecialchars($_SESSION['username']));
 	if (isset($username)){
 		$table = $username."_locations";
 		$query = "update $table set comment='$comment' where id=$id";
-		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+		mysqli_query($connection, $query) or die("Error 104: Oops! Something went wrong!");
 	}
 }
 
 function delete_location($id){
 	global $connection;
-	$username = $_SESSION['username'];
+	$username = mysqli_real_escape_string($connection, htmlspecialchars($_SESSION['username']));
 	if (isset($username)) {
 		$table = $username."_locations";
 		$query = "delete from $table where id=$id";
-		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+		mysqli_query($connection, $query) or die("Error 105: Oops! Something went wrong!");
 	}
 }
 
 function delete_all_locations(){
 	global $connection;
-	$username = $_SESSION['username'];
+	$username = mysqli_real_escape_string($connection, htmlspecialchars($_SESSION['username']));
 	if (isset($username)) {
 		$table = $username."_locations";
 		$query = "truncate table $table";
-		mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+		mysqli_query($connection, $query) or die("Error 106: Oops! Something went wrong!");
 	}
 }
 
 function get_locations() {
 	global $connection;
-	$table = $_SESSION['username']."_locations";
+	$username = mysqli_real_escape_string($connection, htmlspecialchars($_SESSION['username']));
+	$table = $username."_locations";
 	$query = "select * from $table";
-	$result = mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+	$result = mysqli_query($connection, $query) or die("Error 107: Oops! Something went wrong!");
 	$locations = [];
 	while ($line = mysqli_fetch_array($result)){ 
 		$country = $line['country'];
@@ -161,7 +162,7 @@ function register(){
 			$error = "Please fill in all the fields!";
 			include('view/register.html');
 		} else if (!ctype_alnum($username)) {
-			$error = "Username does not meet the requirements! Username can only contain lowercase, uppercase and numbers.";
+			$error = "Username can only contain letters and numbers.";
 			include('view/register.html');
 		} else if (strlen($password) < 9) { //check if password is long enough
 			$error = "Password must be at least 9 characters long!";
@@ -171,7 +172,7 @@ function register(){
 			include('view/register.html');
 		} else {
 			$query = "select * from users where username='$username'";
-			$result = mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+			$result = mysqli_query($connection, $query) or die("Error 108a: Oops! Something went wrong!");
 			$rows = mysqli_num_rows($result); //check if username already exists
 			if ($rows) {
 				$error = "Username already exists!";
@@ -179,7 +180,7 @@ function register(){
 			} else {
 				$password = sha1($password);
 				$query = "insert into users (username,passwrd) values ('$username','$password')";
-				mysqli_query($connection, $query) or die("Error: ".mysqli_error($connection));
+				mysqli_query($connection, $query) or die("Error 108b: Oops! Something went wrong!");
 				if (mysqli_insert_id($connection) > 0) {
 					$_SESSION['notification'] = "You have been registered!";
 					header('Location:?mode=login');
