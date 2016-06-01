@@ -45,10 +45,10 @@ function login(){
 			$error = "Username and/or password missing! <br> \n";
 			include('view/login.html');
 		} else {
-			$query = "select * from users";
+			$query = "select * from users where username='$username'";
 			$result = mysqli_query($connection, $query) or die("Error 101: Oops! Something went wrong!");
 			$username_exists = false;
-			while ($line = mysqli_fetch_array($result)){ 
+			if ($line = mysqli_fetch_array($result)){ //Check if the user exists in database
 				$db_password = $line['passwrd'];
 				if (password_verify($password, $db_password)) {
 					$username_exists = true;
