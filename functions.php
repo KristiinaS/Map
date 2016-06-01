@@ -45,11 +45,17 @@ function login(){
 			$error = "Username and/or password missing! <br> \n";
 			include('view/login.html');
 		} else {
-			$password = sha1($password);
-			$query = "select * from users where username='$username' and passwrd='$password'";
+			$query = "select * from users";
 			$result = mysqli_query($connection, $query) or die("Error 101: Oops! Something went wrong!");
-			$rows = mysqli_num_rows($result); //Check if the user exists in database
-			if ($rows){
+			$username_exists = false;
+			while ($line = mysqli_fetch_array($result)){ 
+				$db_password = $line['passwrd'];
+				if (password_verify($password, $db_password)) {
+					$username_exists = true;
+				}
+			}
+			
+			if ($username_exists) {
 				$_SESSION['logged_in'] = 1;
 				$_SESSION['notification'] = "You are now logged in!";
 				$_SESSION['username'] = $username;
@@ -57,7 +63,7 @@ function login(){
 				$_SESSION['id'] = $value->id;
 				create_locations_db($username);
 				header('Location:?mode=map');
-			} else {				
+			} else {
 				$error = "Username/password is incorrect! <br> \n";
 				include("view/login.html");
 			}
@@ -180,7 +186,7 @@ function register(){
 				$error = "Username already exists!";
 				include('view/register.html');
 			} else {
-				$password = sha1($password);
+				$password = password_hash($password, PASSWORD_BCRYPT);
 				$query = "insert into users (username,passwrd) values ('$username','$password')";
 				mysqli_query($connection, $query) or die("Error 108b: Oops! Something went wrong!");
 				if (mysqli_insert_id($connection) > 0) {
