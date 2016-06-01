@@ -98,6 +98,7 @@ function add_location() {
 
 function save_comment($id, $comment){
 	global $connection;
+	$id = mysqli_real_escape_string($connection, htmlspecialchars($id));
 	$comment = mysqli_real_escape_string($connection, htmlspecialchars($comment));
 	$username = mysqli_real_escape_string($connection, htmlspecialchars($_SESSION['username']));
 	if (isset($username)){
