@@ -84,10 +84,10 @@ function add_location() {
 	global $connection; 
 	$username = mysqli_real_escape_string($connection, htmlspecialchars($_SESSION['username']));
 	if (isset($username)) {
-		$lat = htmlspecialchars($_POST['lat']);
-		$lng = htmlspecialchars($_POST['lng']);
-		$country = htmlspecialchars($_POST['country']);
-		$city = htmlspecialchars($_POST['city']);
+		$lat = mysqli_real_escape_string($connection,htmlspecialchars($_POST['lat']));
+		$lng = mysqli_real_escape_string($connection,htmlspecialchars($_POST['lng']));
+		$country = mysqli_real_escape_string($connection,htmlspecialchars($_POST['country']));
+		$city = mysqli_real_escape_string($connection,htmlspecialchars($_POST['city']));
 		$table = $username."_locations";
 		$query = "insert into $table (country,city,lat,lng) values ('$country','$city','$lat', $lng)";
 		mysqli_query($connection, $query) or die("Error 103: Oops! Something went wrong!");
@@ -109,6 +109,7 @@ function save_comment($id, $comment){
 
 function delete_location($id){
 	global $connection;
+	$id = mysqli_real_escape_string($connection, htmlspecialchars($id));
 	$username = mysqli_real_escape_string($connection, htmlspecialchars($_SESSION['username']));
 	if (isset($username)) {
 		$table = $username."_locations";
