@@ -172,6 +172,9 @@ function register(){
 		} else if (strlen($username) > 40) {
 			$error = "Username cannot be more than 40 characters!";
 			include('view/register.html');
+		} else if (strlen($username) < 5) {
+			$error = "Username has to be at least 5 characters!";
+			include('view/register.html');
 		} else if (!ctype_alnum($username)) {
 			$error = "Username can only contain letters and numbers!";
 			include('view/register.html');
